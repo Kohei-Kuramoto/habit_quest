@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id         String      @id @default(uuid())
+  email      String      @unique
+  name       String?
+  profileUrl String?
+  createdAt  DateTime    @default(now())
+
+  character  Character?
+  habits     Habit[]
+  habitLogs  HabitLog[]
+  aiMessages AiMessage[]
+}
+
+model Character {
+  id        String          @id @default(uuid())
+  userId    String          @unique
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  type      String
+  level     Int             @default(1)
+  xp        Int             @default(0)
+  xpToNext  Int             @default(100)
+  hp        Int             @default(100)
+  maxHp     Int             @default(100)
+  status    CharacterStatus @default(HEALTHY)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+}
+
+model Habit {
+  id          String     @id @default(uuid())
+  userId      String
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  icon        String?
+  frequency   Frequency  @default(DAILY)
+  daysOfWeek  Int[]
+  xpReward    Int        @default(10)
+  isActive    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+
+  logs        HabitLog[]
+}
+
+model HabitLog {
+  id          String   @id @default(uuid())
+  habitId     String
+  habit       Habit    @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  completedAt DateTime @db.Date
+  mood        Mood
+  note        String?
+  xpEarned    Int
+  createdAt   DateTime @default(now())
+
+  @@unique([habitId, completedAt])
+  @@index([userId, completedAt])
+  @@index([habitId])
+}
+
+model AiMessage {
+  id        String        @id @default(uuid())
+  userId    String
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      AiMessageType
+  content   String
+  trigger   String?
+  createdAt DateTime      @default(now())
+
+  @@index([userId, createdAt])
+}
+
+enum CharacterStatus {
+  HEALTHY
+  TIRED
+  CRITICAL
+}
+
+enum Frequency {
+  DAILY
+  WEEKLY
+}
+
+enum Mood {
+  GREAT
+  GOOD
+  NEUTRAL
+  BAD
+  TERRIBLE
+}
+
+enum AiMessageType {
+  ENCOURAGEMENT
+  SUGGESTION
+}
