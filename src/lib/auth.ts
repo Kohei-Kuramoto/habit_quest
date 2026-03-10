@@ -9,7 +9,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
-
   callbacks: {
     async signIn({ user }) {
       if (!user.email) return false
@@ -26,14 +25,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return true
     },
 
-    async session({ session }) {
-      if (session.user?.email) {
-        const dbUser = await prisma.user.findUnique({
-          where: { email: session.user.email },
-        })
-        if (dbUser) {
-          session.user.id = dbUser.id
-        }
+    // JWTにユーザー情報を保存する（DBを使わない）
+    async jwt({ token, user }) {
+      if (user) {
+        token.email = user.email
+      }
+      return token
+    },
+
+    // JWTからセッションを作る（DBを使わない）
+    async session({ session, token }) {
+      if (token.email) {
+        session.user.email = token.email as string
       }
       return session
     },
