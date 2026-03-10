@@ -9,9 +9,10 @@ export default auth((req) => {
   const isLoginPage      = pathname.startsWith('/login')
   const isOnboardingPage = pathname.startsWith('/onboarding')
   const isApiRoute       = pathname.startsWith('/api')
+  const isTopPage        = pathname === '/'
 
-  // APIルートはそのまま通す
-  if (isApiRoute) return
+  // トップページ・APIルート・ログインページはそのまま通す
+  if (isTopPage || isApiRoute) return
 
   // 未ログインでログインページ以外にアクセスした場合
   if (!isLoggedIn && !isLoginPage) {
