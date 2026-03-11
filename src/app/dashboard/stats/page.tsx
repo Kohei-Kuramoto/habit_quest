@@ -40,7 +40,7 @@ export default async function StatsPage() {
         string,
         { title: string; icon: string; count: number; xp: number }
       >,
-      log,
+      log: { xpEarned: number; habit: { title: string; icon: string | null } },
     ) => {
       const title = log.habit.title;
       const icon = log.habit.icon ?? "⚔️";
