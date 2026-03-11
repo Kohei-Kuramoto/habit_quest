@@ -1,36 +1,170 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⚔️ HabitQuest
 
-## Getting Started
+> 習慣化をRPGで楽しく続けるウェブアプリ  
+> A web app that makes habit building fun through RPG gamification
 
-First, run the development server:
+🌐 **Demo**: [https://habit-quest-jp.vercel.app](https://habit-quest-jp.vercel.app)
+
+---
+
+## 📖 概要 / Overview
+
+**日本語**
+
+HabitQuestは、日々の習慣をRPGゲームとして楽しめる習慣管理アプリです。習慣を達成するたびにキャラクターがXPを獲得してレベルアップし、サボるとHPが減少します。AIナビゲーターが毎回励ましのメッセージを送ってくれるため、モチベーションを維持しながら習慣を続けられます。
+
+**English**
+
+HabitQuest is a habit tracking app that gamifies your daily routines as an RPG adventure. Each time you complete a habit, your character earns XP and levels up — skip a habit and your HP decreases. An AI navigator sends personalized encouragement messages to keep you motivated.
+
+---
+
+## ✨ 主な機能 / Features
+
+| 機能                   | 説明                                                        |
+| ---------------------- | ----------------------------------------------------------- |
+| 🎮 RPGキャラクター育成 | 4種類のキャラクターから選択。習慣達成でXP獲得・レベルアップ |
+| 🤖 AI励ましメッセージ  | チェックイン時にAIがパーソナライズされたメッセージを送信    |
+| 📊 統計・可視化        | 連続日数・達成率・XP履歴をグラフで確認                      |
+| ⚔️ 習慣CRUD            | 毎日/週次の頻度・XP報酬をカスタマイズ可能                   |
+| 🔐 Google OAuth        | Googleアカウントでワンクリックログイン                      |
+| 📱 レスポンシブ対応    | モバイル・デスクトップ両対応                                |
+
+---
+
+## 🛠️ 技術スタック / Tech Stack
+
+### Frontend
+
+- **Next.js 16** (App Router)
+- **TypeScript**
+- **Tailwind CSS v4**
+- **Framer Motion** — アニメーション
+
+### Backend
+
+- **Next.js Route Handlers** — APIエンドポイント
+- **Prisma ORM** — DBアクセス
+- **Supabase (PostgreSQL)** — データベース
+- **NextAuth.js v5** — 認証
+
+### AI
+
+- **OpenRouter API** (google/gemma-3-4b-it) — AI励ましメッセージ生成
+
+### Deployment
+
+- **Vercel** — ホスティング
+- **Supabase** — クラウドDB
+
+---
+
+## 🚀 セットアップ / Setup
+
+### 必要環境 / Requirements
+
+- Node.js 18+
+- npm
+- Supabase アカウント
+- Google Cloud Console アカウント
+- OpenRouter アカウント
+
+### インストール / Installation
+
+```bash
+# リポジトリをクローン
+git clone https://github.com/Kohei-Kuramoto/habit_quest.git
+cd habit-quest
+
+# 依存関係をインストール
+npm install
+
+# 環境変数を設定
+cp .env.example .env.local
+```
+
+### 環境変数 / Environment Variables
+
+`.env.local`に以下を設定してください。
+
+```env
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# NextAuth
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your_nextauth_secret
+
+# Google OAuth
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+# Database
+DATABASE_URL=your_database_url
+DIRECT_URL=your_direct_url
+
+# OpenRouter AI
+OPENROUTER_API_KEY=your_openrouter_api_key
+```
+
+### DBマイグレーション / DB Migration
+
+```bash
+npx prisma generate
+npx prisma migrate deploy
+```
+
+### 開発サーバー起動 / Start Dev Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`http://localhost:3000` にアクセスしてください。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 プロジェクト構成 / Project Structure
 
-## Learn More
+```
+habit-quest/
+├── prisma/
+│   ├── schema.prisma        # DBスキーマ
+│   └── migrations/          # マイグレーションファイル
+├── src/
+│   ├── app/
+│   │   ├── api/             # APIルート
+│   │   │   ├── auth/        # NextAuth
+│   │   │   ├── habits/      # 習慣CRUD・チェックイン
+│   │   │   ├── character/   # キャラクター
+│   │   │   ├── stats/       # 統計
+│   │   │   └── ai/          # AI励ましメッセージ
+│   │   ├── dashboard/       # ダッシュボード画面
+│   │   ├── login/           # ログイン画面
+│   │   └── onboarding/      # オンボーディング画面
+│   ├── components/          # 共通コンポーネント
+│   └── lib/                 # ユーティリティ
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🗄️ DBスキーマ / DB Schema
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+User ──< Habit ──< HabitLog
+  └──── Character
+```
 
-## Deploy on Vercel
+- **User**: ユーザー情報
+- **Character**: RPGキャラクター（HP・XP・レベル）
+- **Habit**: 習慣（頻度・XP報酬）
+- **HabitLog**: チェックイン履歴
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 👤 作者 / Author
+
+**Kohei Kuramoto**
+
+- GitHub: [@Kohei-Kuramoto](https://github.com/Kohei-Kuramoto)
