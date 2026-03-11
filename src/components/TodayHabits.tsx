@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 type Habit = {
   id: string;
   title: string;
-  icon: string;
+  icon: string | null;
   xpReward: number;
   isCompleted: boolean;
 };

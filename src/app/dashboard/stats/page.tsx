@@ -55,9 +55,14 @@ export default async function StatsPage() {
     >,
   );
 
-  const habitStatsArray = Object.values(habitStats).sort(
-    (a, b) => b.count - a.count,
-  );
+  const habitStatsArray = (
+    Object.values(habitStats) as {
+      title: string;
+      icon: string;
+      count: number;
+      xp: number;
+    }[]
+  ).sort((a, b) => b.count - a.count);
 
   // 過去7日間のデータを作成する
   const last7Days = Array.from({ length: 7 }, (_, i) => {
