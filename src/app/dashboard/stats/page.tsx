@@ -71,7 +71,8 @@ export default async function StatsPage() {
     date.setHours(0, 0, 0, 0);
     const dateStr = date.toISOString().split("T")[0];
     const count = logs.filter(
-      (l) => l.completedAt.toISOString().split("T")[0] === dateStr,
+      (l: { completedAt: Date }) =>
+        l.completedAt.toISOString().split("T")[0] === dateStr,
     ).length;
     return {
       date: dateStr,
