@@ -17,7 +17,10 @@ export default async function ProfilePage() {
   if (!user) redirect("/login");
 
   const totalCheckins = user.habitLogs.length;
-  const totalXp = user.habitLogs.reduce((sum, log) => sum + log.xpEarned, 0);
+  const totalXp = user.habitLogs.reduce(
+    (sum: number, log: { xpEarned: number }) => sum + log.xpEarned,
+    0,
+  );
   const activeHabits = user.habits.length;
 
   return (
