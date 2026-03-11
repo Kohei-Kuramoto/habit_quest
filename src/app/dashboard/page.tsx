@@ -37,7 +37,9 @@ export default async function DashboardPage() {
   });
 
   // チェックイン済みの習慣IDのセットを作る
-  const completedHabitIds = new Set(todayLogs.map((log) => log.habitId));
+  const completedHabitIds = new Set(
+    todayLogs.map((log: { habitId: string }) => log.habitId),
+  );
 
   // 習慣リストにisCompletedを追加する
   const habitsWithStatus = user.habits.map((habit) => ({
