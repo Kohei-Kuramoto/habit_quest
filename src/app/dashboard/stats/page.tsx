@@ -28,7 +28,10 @@ export default async function StatsPage() {
   const totalCheckins = logs.length;
   const { currentStreak, longestStreak } = calcStreaks(logs);
   const weeklyRate = calcWeeklyRate(logs);
-  const totalXp = logs.reduce((sum, log) => sum + log.xpEarned, 0);
+  const totalXp = logs.reduce(
+    (sum: number, log: { xpEarned: number }) => sum + log.xpEarned,
+    0,
+  );
 
   // 習慣ごとのチェックイン数を集計する
   const habitStats = logs.reduce(
