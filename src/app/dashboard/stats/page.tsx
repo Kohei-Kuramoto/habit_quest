@@ -35,7 +35,13 @@ export default async function StatsPage() {
 
   // 習慣ごとのチェックイン数を集計する
   const habitStats = logs.reduce(
-    (acc, log) => {
+    (
+      acc: Record<
+        string,
+        { title: string; icon: string; count: number; xp: number }
+      >,
+      log,
+    ) => {
       const title = log.habit.title;
       const icon = log.habit.icon ?? "⚔️";
       if (!acc[title]) acc[title] = { title, icon, count: 0, xp: 0 };
