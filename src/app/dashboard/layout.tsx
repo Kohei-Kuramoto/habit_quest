@@ -11,7 +11,7 @@ export default function DashboardLayout({
       <Sidebar />
 
       {/* メインコンテンツ：デスクトップはサイドバー幅分オフセット、モバイルはボトムナビ分パディング */}
-      <main className="md:ml-64 p-4 md:p-8 pb-24 md:pb-8">{children}</main>
+      <main className="md:ml-64 pt-16 px-4 pb-8 md:p-8">{children}</main>
     </div>
   );
 }

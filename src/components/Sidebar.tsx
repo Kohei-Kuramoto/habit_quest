@@ -63,17 +63,22 @@ export default function Sidebar() {
         </div>
       </aside>
 
-      {/* モバイル用ハンバーガーボタン（md未満で表示） */}
-      <div className="md:hidden fixed top-4 left-4 z-50">
+      {/* モバイル用トップヘッダーバー（md未満で表示） */}
+      <header className="md:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/50 flex items-center px-4 gap-3">
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-slate-800 border border-slate-700 rounded-xl p-3 text-white"
+          className="flex flex-col justify-center items-center w-10 h-10 rounded-xl hover:bg-slate-800 transition-colors"
+          aria-label="メニューを開く"
         >
-          <div className="w-5 h-0.5 bg-white mb-1" />
-          <div className="w-5 h-0.5 bg-white mb-1" />
+          <div className="w-5 h-0.5 bg-white mb-1.5" />
+          <div className="w-5 h-0.5 bg-white mb-1.5" />
           <div className="w-5 h-0.5 bg-white" />
         </button>
-      </div>
+        <div className="flex items-center gap-2">
+          <span className="text-xl">⚔️</span>
+          <span className="text-white font-bold text-base">HabitQuest</span>
+        </div>
+      </header>
 
       {/* モバイル用ドロワーメニュー */}
       {isOpen && (
