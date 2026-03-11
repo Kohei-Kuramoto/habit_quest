@@ -32,6 +32,17 @@ HabitQuest is a habit tracking app that gamifies your daily routines as an RPG a
 
 ---
 
+## 📋 設計ドキュメント / Design Documents
+
+| ドキュメント                            | 内容                                          |
+| --------------------------------------- | --------------------------------------------- |
+| [要件定義書](./docs/要件定義書.pdf)     | 機能要件・非機能要件                          |
+| [API設計書](./docs/API設計書.pdf)       | エンドポイント一覧・リクエスト/レスポンス仕様 |
+| [DB設計・ER図](./docs/ER図.pdf)         | テーブル設計・リレーション                    |
+| [プロトタイプ](./docs/プロトタイプ.pdf) | 画面設計・UI/UX                               |
+
+---
+
 ## 🛠️ 技術スタック / Tech Stack
 
 ### Frontend
