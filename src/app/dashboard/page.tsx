@@ -42,10 +42,19 @@ export default async function DashboardPage() {
   );
 
   // 習慣リストにisCompletedを追加する
-  const habitsWithStatus = user.habits.map((habit) => ({
-    ...habit,
-    isCompleted: completedHabitIds.has(habit.id),
-  }));
+  const habitsWithStatus = user.habits.map(
+    (habit: {
+      id: string;
+      title: string;
+      icon: string | null;
+      frequency: string;
+      xpReward: number;
+      isActive: boolean;
+    }) => ({
+      ...habit,
+      isCompleted: completedHabitIds.has(habit.id),
+    }),
+  );
 
   // 統計データを計算する
   const allLogs = await prisma.habitLog.findMany({
