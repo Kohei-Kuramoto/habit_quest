@@ -64,7 +64,7 @@ export default function Sidebar() {
       </aside>
 
       {/* モバイル用ハンバーガーボタン（md未満で表示） */}
-      <div className="md:hidden fixed top-4 right-4 z-50">
+      <div className="md:hidden fixed top-4 left-4 z-50">
         <button
           onClick={() => setIsOpen(true)}
           className="bg-slate-800 border border-slate-700 rounded-xl p-3 text-white"
