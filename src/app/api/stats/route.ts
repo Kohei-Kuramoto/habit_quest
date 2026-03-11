@@ -38,7 +38,7 @@ export async function GET(req: NextRequest) {
   const weeklyRate = calcWeeklyRate(logs)
 
   // XP履歴（グラフ用）
-  const xpHistory = logs.map(log => ({
+  const xpHistory = logs.map((log: { completedAt: Date; xpEarned: number }) => ({
     date:     log.completedAt,
     xp:       log.xpEarned,
   }))
