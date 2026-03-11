@@ -7,11 +7,11 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="min-h-screen bg-slate-950">
-      {/* サイドバー */}
+      {/* サイドバー（デスクトップ）/ ボトムナビ（モバイル） */}
       <Sidebar />
 
-      {/* メインコンテンツ（サイドバーの幅分だけ右にずらす） */}
-      <main className="ml-64 p-8">{children}</main>
+      {/* メインコンテンツ：デスクトップはサイドバー幅分オフセット、モバイルはボトムナビ分パディング */}
+      <main className="md:ml-64 p-4 md:p-8 pb-24 md:pb-8">{children}</main>
     </div>
   );
 }

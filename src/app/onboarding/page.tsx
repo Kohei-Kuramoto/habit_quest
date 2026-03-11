@@ -97,7 +97,7 @@ export default function OnboardingPage() {
               key={char.type}
               onClick={() => setSelectedType(char.type)}
               className={`
-                relative p-6 rounded-2xl border-2 transition-all duration-200 text-left
+                relative p-4 md:p-6 rounded-2xl border-2 transition-all duration-200 text-left
                 ${
                   selectedType === char.type
                     ? "border-indigo-400 bg-indigo-500/20 scale-105"

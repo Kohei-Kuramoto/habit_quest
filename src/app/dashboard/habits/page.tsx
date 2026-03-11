@@ -148,10 +148,11 @@ export default function HabitsPage() {
             setShowForm(true);
             resetForm();
           }}
-          className="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-4 py-2 rounded-xl transition-colors flex items-center gap-2"
+          className="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-3 py-2 md:px-4 rounded-xl transition-colors flex items-center gap-2 flex-shrink-0"
         >
           <span>＋</span>
-          <span>新しいクエスト</span>
+          <span className="hidden sm:inline">新しいクエスト</span>
+          <span className="sm:hidden">追加</span>
         </button>
       </div>
 

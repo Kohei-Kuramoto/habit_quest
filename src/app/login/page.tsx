@@ -3,7 +3,7 @@ import { signIn } from "@/lib/auth";
 export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-purple-950 to-slate-900 flex items-center justify-center">
-      <div className="bg-white/10 backdrop-blur-md rounded-2xl p-10 flex flex-col items-center gap-6 shadow-2xl border border-white/20 w-full max-w-sm">
+      <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 md:p-10 flex flex-col items-center gap-6 shadow-2xl border border-white/20 w-full max-w-sm mx-4">
         <div className="text-6xl">⚔️</div>
 
         <div className="text-center">
