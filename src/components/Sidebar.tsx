@@ -1,8 +1,8 @@
 "use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { useState } from "react";
 
 const navItems = [
   { href: "/dashboard", icon: "🏠", label: "ホーム" },
@@ -13,6 +13,7 @@ const navItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
@@ -29,23 +30,18 @@ export default function Sidebar() {
             </div>
           </div>
         </div>
-
         <nav className="flex-1 p-4 space-y-1">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
-
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`
-                  flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
-                  ${
-                    isActive
-                      ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/20"
-                      : "text-slate-400 hover:bg-slate-800 hover:text-white"
-                  }
-                `}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                  isActive
+                    ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/20"
+                    : "text-slate-400 hover:bg-slate-800 hover:text-white"
+                }`}
               >
                 <span className="text-xl">{item.icon}</span>
                 <span className="font-medium">{item.label}</span>
@@ -56,7 +52,6 @@ export default function Sidebar() {
             );
           })}
         </nav>
-
         <div className="p-4 border-t border-slate-700/50">
           <button
             onClick={() => signOut({ callbackUrl: "/login" })}
@@ -68,35 +63,75 @@ export default function Sidebar() {
         </div>
       </aside>
 
-      {/* モバイル用ボトムナビゲーション（md未満で表示） */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-slate-900 border-t border-slate-700/50">
-        <div className="flex items-center justify-around">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
+      {/* モバイル用ハンバーガーボタン（md未満で表示） */}
+      <div className="md:hidden fixed top-4 right-4 z-50">
+        <button
+          onClick={() => setIsOpen(true)}
+          className="bg-slate-800 border border-slate-700 rounded-xl p-3 text-white"
+        >
+          <div className="w-5 h-0.5 bg-white mb-1" />
+          <div className="w-5 h-0.5 bg-white mb-1" />
+          <div className="w-5 h-0.5 bg-white" />
+        </button>
+      </div>
 
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`
-                  flex flex-col items-center gap-1 py-3 px-4 flex-1 transition-all duration-200
-                  ${isActive ? "text-indigo-400" : "text-slate-500"}
-                `}
+      {/* モバイル用ドロワーメニュー */}
+      {isOpen && (
+        <>
+          {/* 背景オーバーレイ */}
+          <div
+            className="md:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
+            onClick={() => setIsOpen(false)}
+          />
+          {/* メニュー本体 */}
+          <div className="md:hidden fixed top-0 right-0 h-full w-64 z-50 bg-slate-900 border-l border-slate-700/50 flex flex-col">
+            {/* ヘッダー */}
+            <div className="p-6 border-b border-slate-700/50 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">⚔️</span>
+                <h1 className="text-white font-bold text-lg">HabitQuest</h1>
+              </div>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="text-slate-400 hover:text-white text-2xl leading-none"
               >
-                <span className="text-2xl">{item.icon}</span>
-                <span className="text-xs font-medium">{item.label}</span>
-              </Link>
-            );
-          })}
-          <button
-            onClick={() => signOut({ callbackUrl: "/login" })}
-            className="flex flex-col items-center gap-1 py-3 px-4 flex-1 text-slate-500 transition-all duration-200"
-          >
-            <span className="text-2xl">🚪</span>
-            <span className="text-xs font-medium">ログアウト</span>
-          </button>
-        </div>
-      </nav>
+                ✕
+              </button>
+            </div>
+            {/* ナビリンク */}
+            <nav className="flex-1 p-4 space-y-1">
+              {navItems.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                      isActive
+                        ? "bg-indigo-600 text-white"
+                        : "text-slate-400 hover:bg-slate-800 hover:text-white"
+                    }`}
+                  >
+                    <span className="text-xl">{item.icon}</span>
+                    <span className="font-medium">{item.label}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+            {/* ログアウト */}
+            <div className="p-4 border-t border-slate-700/50">
+              <button
+                onClick={() => signOut({ callbackUrl: "/login" })}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-800 hover:text-white transition-all duration-200"
+              >
+                <span className="text-xl">🚪</span>
+                <span className="font-medium">ログアウト</span>
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }
